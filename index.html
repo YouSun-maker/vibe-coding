@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SNAKE VIBE - 全平台版</title>
+    <style>
+        body { 
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; margin: 0; background: #0f0f0f; 
+            color: white; font-family: sans-serif; flex-direction: column;
+            touch-action: none; /* 防止手机端缩放和拖拽 */
+        }
+        #game-container { position: relative; width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+        .score-board { font-size: 24px; font-weight: bold; color: #2ecc71; margin: 10px 0; }
+        canvas { background: #000; border: 2px solid #333; width: 90vw; height: 90vw; max-width: 600px; max-height: 600px; }
+        
+        #overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; z-index: 10;
+        }
+        button#start-btn {
+            padding: 12px 40px; font-size: 20px; background: #2ecc71; border: none; 
+            color: white; border-radius: 25px; font-weight: bold; cursor: pointer;
+        }
+
+        /* 手机控制键 */
+        .controls { 
+            margin-top: 20px; display: grid; 
+            grid-template-areas: ". up ." "left down right"; gap: 10px;
+        }
+        .btn-ctrl {
+            width: 60px; height: 60px; background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 24px; color: white; user-select: none;
+        }
+        .btn-ctrl:active { background: rgba(46, 204, 113, 0.5); transform: scale(0.9); }
+        .up { grid-area: up; } .left { grid-area: left; } .down { grid-area: down; } .right { grid-area: right; }
+    </style>
+</head>
+<body>
+
+    <div class="score-board" id="score">SCORE: 0</div>
+
+    <div id="game-container">
+        <canvas id="gameCanvas" width="600" height="600"></canvas>
+        <div id="overlay">
+            <h2 id="status-text">SNAKE VIBE</h2>
+            <button id="start-btn" onclick="startGame()">开始游戏</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="btn-ctrl up" onclick="setDir('UP')">▲</div>
+        <div class="btn-ctrl left" onclick="setDir('LEFT')">◀</div>
+        <div class="btn-ctrl down" onclick="setDir('DOWN')">▼</div>
+        <div class="btn-ctrl right" onclick="setDir('RIGHT')">▶</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const box = 20;
+
+        let snake, direction, nextDirection, score, speed, gameLoop;
+
+        function init() {
+            snake = [{x: 15 * box, y: 15 * box}, {x: 14 * box, y: 15 * box}];
+            direction = "RIGHT";
+            nextDirection = "RIGHT";
+            score = 0;
+            speed = 160;
+            document.getElementById("score").innerText = "SCORE: 0";
+        }
+
+        let food = { x: 10 * box, y: 10 * box };
+
+        // 键盘控制
+        document.addEventListener("keydown", (e) => {
+            if(e.key === "ArrowLeft") setDir('LEFT');
+            if(e.key === "ArrowUp") setDir('UP');
+            if(e.key === "ArrowRight") setDir('RIGHT');
+            if(e.key === "ArrowDown") setDir('DOWN');
+        });
+
+        // 统一的方向设置函数
+        function setDir(newDir) {
+            if(newDir === "LEFT" && direction !== "RIGHT") nextDirection = "LEFT";
+            if(newDir === "UP" && direction !== "DOWN") nextDirection = "UP";
+            if(newDir === "RIGHT" && direction !== "LEFT") nextDirection = "RIGHT";
+            if(newDir === "DOWN" && direction !== "UP") nextDirection = "DOWN";
+        }
+
+        function startGame() {
+            init();
+            document.getElementById("overlay").style.display = "none";
+            if(gameLoop) clearInterval(gameLoop);
+            gameLoop = setInterval(draw, speed);
+        }
+
+        function draw() {
+            direction = nextDirection;
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 蛇
+            for(let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i === 0) ? "#2ecc71" : "#27ae60";
+                ctx.fillRect(snake[i].x, snake[i].y, box - 1, box - 1);
+            }
+            // 食物
+            ctx.fillStyle = "#e74c3c";
+            ctx.fillRect(food.x, food.y, box - 1, box - 1);
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+            if(direction === "LEFT") snakeX -= box;
+            if(direction === "UP") snakeY -= box;
+            if(direction === "RIGHT") snakeX += box;
+            if(direction === "DOWN") snakeY += box;
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            if(snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(gameLoop);
+                document.getElementById("status-text").innerText = "得分: " + score;
+                document.getElementById("overlay").style.display = "flex";
+                return;
+            }
+
+            if(snakeX === food.x && snakeY === food.y) {
+                score++;
+                document.getElementById("score").innerText = "SCORE: " + score;
+                food = { x: Math.floor(Math.random()*29)*box, y: Math.floor(Math.random()*29)*box };
+                clearInterval(gameLoop);
+                speed = Math.max(60, 160 - (score * 3));
+                gameLoop = setInterval(draw, speed);
+            } else {
+                snake.pop();
+            }
+            snake.unshift(newHead);
+        }
+
+        function collision(head, array) {
+            for(let i = 0; i < array.length; i++) {
+                if(head.x === array[i].x && head.y === array[i].y) return true;
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
