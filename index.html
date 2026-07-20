@@ -368,6 +368,10 @@
       letter-spacing: 0;
     }
 
+    .mobile-brand {
+      display: none;
+    }
+
     .hero-title {
       width: 100%;
       margin-top: clamp(24px, 2vw, 36px);
@@ -2737,26 +2741,11 @@
       }
 
       .hero.cinematic-hero .hero-logo {
-        padding-bottom: 16px;
-        border-bottom: 1px solid rgba(255,255,255,.12);
-      }
-
-      .hero.cinematic-hero .nav .hero-cta {
-        margin-top: 10px;
+        display: none;
       }
 
       .nav-actions {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 8px;
-        margin-top: 10px;
-        padding-top: 12px;
-        border-top: 1px solid rgba(255,255,255,.1);
-      }
-
-      .nav-actions .hero-cta {
-        width: 100%;
-        padding: 12px 14px;
+        display: none;
       }
 
       .music-toggle {
@@ -2918,9 +2907,39 @@
     @media (max-width: 560px) {
       .hero { min-height: 100svh; }
       .hero.cinematic-hero .nav {
-        top: 68px;
+        top: 88px;
         left: 12px;
         right: 12px;
+        padding: 20px 26px;
+      }
+
+      .hero.cinematic-hero .hero-nav-links {
+        gap: 4px;
+      }
+
+      .hero.cinematic-hero .nav a {
+        padding: 10px 0;
+      }
+
+      .mobile-menu {
+        top: 20px;
+        right: 16px;
+      }
+
+      .mobile-brand {
+        display: inline-flex;
+        position: absolute;
+        top: 24px;
+        left: 20px;
+        z-index: 35;
+        align-items: center;
+        min-height: 40px;
+      }
+
+      .mobile-brand img {
+        display: block;
+        width: 156px;
+        height: auto;
       }
 
       .hero-center {
@@ -3138,6 +3157,179 @@
       }
     }
 
+    /* Mobile layout: make the about cards deliberate, readable, and compact. */
+    @media (max-width: 700px) {
+      .about {
+        padding: 64px 16px 72px;
+      }
+
+      .about-header {
+        gap: 28px;
+      }
+
+      .feature-grid,
+      .feature-stack {
+        gap: 14px;
+      }
+
+      /* The personal card is a primary content block, never a delayed blank area. */
+      .feature-card.tall.big-stat {
+        display: grid !important;
+        min-height: 420px;
+        opacity: 1;
+        transform: none;
+      }
+
+      .feature-card.tall.big-stat .feature-label,
+      .software-card .feature-label,
+      .career-card .feature-label,
+      .feature-card.muted .feature-label {
+        top: 20px;
+        left: 20px;
+      }
+
+      .feature-card.tall.big-stat .big-stat-content {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+      }
+
+      .feature-card.muted {
+        min-height: 208px;
+        padding: 20px;
+      }
+
+      .career-card {
+        min-height: 304px;
+      }
+
+      .career-list.centered {
+        top: 58px;
+        left: 20px;
+        right: 20px;
+        bottom: 10px;
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+      }
+
+      .career-row {
+        grid-template-columns: minmax(0, 1fr) max-content;
+        grid-template-rows: auto auto;
+        column-gap: 16px;
+        row-gap: 3px;
+        min-height: 0;
+        padding: 11px 0;
+        border-color: rgba(255,255,255,.08);
+      }
+
+      .career-row strong {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        align-self: center;
+        font-size: 15px;
+        line-height: 1.25;
+      }
+
+      .career-row span:first-child,
+      .career-row span:last-child {
+        grid-column: 2;
+        text-align: right;
+        font-size: 12px;
+        line-height: 1.25;
+        white-space: normal;
+      }
+
+      .career-row span:first-child { grid-row: 1; }
+      .career-row span:last-child { grid-row: 2; }
+
+      .software-card {
+        min-height: 320px;
+        padding: 54px 0 18px;
+      }
+
+      .design-beliefs {
+        gap: 13px;
+      }
+
+      .design-beliefs li,
+      .design-beliefs p {
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .projects {
+        padding-top: 64px;
+      }
+
+      .projects-header {
+        margin-bottom: 34px;
+      }
+
+      .projects-header .section-title {
+        font-size: clamp(40px, 11vw, 52px);
+      }
+
+      /* Keep the three section titles at one deliberate mobile scale. */
+      .about-title,
+      .projects-header .section-title,
+      .other-projects .section-title {
+        font-size: 40px;
+        line-height: 1.12;
+      }
+
+      .project-wrap {
+        margin-bottom: 24px;
+      }
+
+      .project-card {
+        gap: 18px;
+        padding: 22px 20px 20px;
+        border-color: rgba(255,255,255,.11);
+      }
+
+      .project-name {
+        min-height: 2.34em;
+        font-size: clamp(32px, 8vw, 36px);
+        line-height: 1.17;
+        letter-spacing: -.02em;
+        margin-bottom: 14px;
+      }
+
+      .project-desc {
+        display: none;
+      }
+
+      .project-meta {
+        margin-top: 2px;
+        margin-bottom: 0;
+      }
+
+      .project-copy,
+      .project-visual {
+        gap: 18px;
+      }
+
+      /* The image itself opens the detail view; the duplicate CTA is unnecessary on mobile. */
+      .project-copy .live-button {
+        display: none;
+      }
+
+      /* Numbers repeat the story already told in each card; remove them on narrow screens. */
+      .project-stats {
+        display: none;
+      }
+
+      .music-toggle {
+        position: absolute;
+        top: 20px;
+        right: 98px;
+        left: auto;
+        bottom: auto;
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+      }
+    }
+
     /* Profile tags mirror the neutral glass treatment used by advantage tags. */
     .feature-card.tall.big-stat .profile-tags span {
       display: inline-flex;
@@ -3198,6 +3390,7 @@
     </video>
     <div class="hero-video-blackout" id="heroVideoBlackout" aria-hidden="true"></div>
     <button class="mobile-menu liquid-glass" id="menuButton" aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <a class="mobile-brand" href="#top" aria-label="Pengfei Xue 首页"><img src="assets/brand/logo-wordmark.svg" alt="Pengfei Xue" /></a>
     <nav class="nav" id="siteNav" aria-label="主导航">
       <a class="hero-logo" href="#top" aria-label="Pengfei Xue 首页"><img src="assets/brand/logo-wordmark.svg" alt="Pengfei Xue" /></a>
       <div class="hero-nav-links">
