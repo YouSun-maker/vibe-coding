@@ -711,14 +711,19 @@ body.case-open .orbit-assistant {
 }
 
 @media (max-width: 760px) {
+  /* Mobile keeps the portfolio reading surface clear; ORBIT remains desktop-only. */
+  .orbit-assistant {
+    display: none;
+  }
+
   .orbit-assistant.is-open .orbit-backdrop {
     opacity: 1;
     pointer-events: auto;
   }
 
-  .orbit-launcher { right: 14px; bottom: 16px; gap: 9px; }
+  .orbit-launcher { right: 10px; bottom: max(10px, env(safe-area-inset-bottom)); gap: 9px; }
 
-  .orbit-robot { width: 72px; height: 106px; }
+  .orbit-robot { width: 54px; height: 80px; }
 
   .orbit-assistant.is-open .orbit-launcher {
     bottom: calc(min(75dvh, 640px) - 4px);
