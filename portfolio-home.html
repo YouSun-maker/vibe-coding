@@ -3194,8 +3194,7 @@
     <span class="music-note" aria-hidden="true">♪</span>
   </button>
   <header class="hero cinematic-hero" id="top">
-    <video class="hero-video" id="heroVideo" autoplay muted playsinline aria-hidden="true">
-      <source src="assets/hero/banner-video.mp4" type="video/mp4" />
+    <video class="hero-video" id="heroVideo" autoplay muted playsinline preload="none" poster="assets/about/design-belief-black-hole.jpg" data-src="assets/hero/banner-video.mp4" aria-hidden="true">
     </video>
     <div class="hero-video-blackout" id="heroVideoBlackout" aria-hidden="true"></div>
     <button class="mobile-menu liquid-glass" id="menuButton" aria-expanded="false" aria-controls="siteNav">Menu</button>
@@ -3630,6 +3629,30 @@
 
     let videoLoopResetting = false;
     const videoFadeLeadTime = 1.5;
+
+    // Keep the first paint lightweight: the still poster is shown immediately,
+    // then the 10 MB cinematic video is fetched only when the page is idle.
+    function startHeroVideoWhenReady() {
+      const sourceUrl = heroVideo.dataset.src;
+      const network = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const slowNetwork = network?.saveData || /(^|-)2g|3g/.test(network?.effectiveType || "");
+      if (!sourceUrl || slowNetwork || reduceMotion.matches) return;
+
+      const source = document.createElement("source");
+      source.src = sourceUrl;
+      source.type = "video/mp4";
+      heroVideo.append(source);
+      delete heroVideo.dataset.src;
+      heroVideo.load();
+      heroVideo.play().catch(() => {});
+    }
+
+    window.addEventListener("load", () => {
+      const deferVideo = window.requestIdleCallback
+        ? (callback) => window.requestIdleCallback(callback, { timeout: 2600 })
+        : (callback) => window.setTimeout(callback, 1200);
+      deferVideo(startHeroVideoWhenReady);
+    }, { once: true });
 
     heroVideo.addEventListener("timeupdate", () => {
       if (!Number.isFinite(heroVideo.duration) || videoLoopResetting) return;
@@ -4537,6 +4560,18 @@
     }, { passive: true });
   </script>
   <script src="assets/orbit/orbit.js"></script>
-  <script src="assets/orbit/orbit-3d.js"></script>
+  <script>
+    // The enhanced 3D rig is non-critical; load it after the portfolio is interactive.
+    window.addEventListener("load", () => {
+      const loadOrbitRig = () => {
+        const script = document.createElement("script");
+        script.src = "assets/orbit/orbit-3d.js";
+        script.async = true;
+        document.body.append(script);
+      };
+      if (window.requestIdleCallback) window.requestIdleCallback(loadOrbitRig, { timeout: 4000 });
+      else window.setTimeout(loadOrbitRig, 1800);
+    }, { once: true });
+  </script>
 </body>
 </html>
