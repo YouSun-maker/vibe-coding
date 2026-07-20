@@ -2644,6 +2644,36 @@
         var(--glass-control-hover);
     }
 
+    /* One continuous glass edge: avoid the old border-plus-inner-ring treatment. */
+    .hero-primary,
+    .live-button,
+    .contact-button,
+    .hero-cta,
+    .profile-tags span,
+    .project-meta span,
+    .tool-tile,
+    .mobile-menu,
+    .other-filter button,
+    .case-close {
+      border-color: rgba(255,255,255,.13);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.16),
+        0 10px 28px rgba(0,0,0,.26);
+    }
+
+    .hero-primary::before,
+    .live-button::before,
+    .contact-button::before,
+    .hero-cta::before,
+    .profile-tags span::before,
+    .project-meta span::before,
+    .tool-tile::before,
+    .mobile-menu::before,
+    .other-filter button::before,
+    .case-close::before {
+      display: none;
+    }
+
     .project-card,
     .feature-card,
     .other-card {
