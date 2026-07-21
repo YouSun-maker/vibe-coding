@@ -75,18 +75,6 @@
     const message = document.createElement("div");
     message.className = `orbit-message orbit-message--${role}`;
 
-    if (role === "assistant") {
-      const avatar = document.createElement("span");
-      avatar.className = "orbit-message-avatar";
-      avatar.setAttribute("aria-hidden", "true");
-
-      const avatarImage = document.createElement("img");
-      avatarImage.src = "assets/orbit/orbit-robot-6block.png";
-      avatarImage.alt = "";
-      avatar.appendChild(avatarImage);
-      message.appendChild(avatar);
-    }
-
     if (meta) {
       const label = document.createElement("span");
       label.className = "orbit-message-meta";

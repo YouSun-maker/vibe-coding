@@ -15,9 +15,12 @@
   box-sizing: border-box;
 }
 
-.orbit-assistant button,
-.orbit-assistant textarea {
+.orbit-assistant button {
   font: inherit;
+}
+
+.orbit-assistant textarea {
+  font-family: inherit;
 }
 
 .orbit-assistant .sr-only {
@@ -384,13 +387,7 @@ body.case-open .orbit-assistant {
 }
 
 .orbit-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0 20px auto;
-  z-index: 4;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .22), rgba(200, 167, 110, .12), transparent);
-  pointer-events: none;
+  display: none;
 }
 
 .orbit-assistant.is-open .orbit-panel {
@@ -408,8 +405,7 @@ body.case-open .orbit-assistant {
   gap: 12px;
   min-height: 72px;
   padding: 16px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, .08);
-  background: rgba(7, 8, 10, .2);
+  background: rgba(7, 8, 10, .12);
 }
 
 .orbit-panel-avatar,
@@ -417,7 +413,7 @@ body.case-open .orbit-assistant {
   display: grid;
   place-items: center;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .11);
+  border: 0;
   border-radius: 50%;
   background:
     radial-gradient(circle at 50% 35%, rgba(255, 255, 255, .08), transparent 58%),
@@ -442,18 +438,18 @@ body.case-open .orbit-assistant {
 .orbit-panel-identity {
   min-width: 0;
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 
 .orbit-panel-identity strong {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1;
   font-weight: 600;
 }
 
 .orbit-panel-identity .orbit-status {
   margin-left: 0;
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .orbit-panel-actions {
@@ -502,36 +498,34 @@ body.case-open .orbit-assistant {
   max-width: 88%;
   display: grid;
   gap: 7px;
-  padding: 12px 14px;
-  border: 1px solid rgba(255, 255, 255, .08);
+  padding: 16px;
+  border: 0;
   border-radius: 14px;
   color: rgba(255, 255, 255, .82);
   background: rgba(255, 255, 255, .045);
   font-size: 12px;
-  line-height: 1.65;
+  line-height: 1.62;
   animation: orbit-message-in .22s ease-out both;
 }
 
 .orbit-message--assistant {
   align-self: flex-start;
-  max-width: calc(100% - 44px);
-  margin-left: 44px;
+  max-width: 100%;
+  margin-left: 0;
   border-top-left-radius: 5px;
 }
 
 .orbit-message--user {
   align-self: flex-end;
   max-width: 78%;
-  border-color: rgba(200, 167, 110, .15);
   border-bottom-right-radius: 5px;
   color: rgba(255, 255, 255, .9);
   background: rgba(200, 167, 110, .07);
 }
 
 .orbit-message--status {
-  max-width: calc(100% - 44px);
-  margin-left: 44px;
-  border-color: transparent;
+  max-width: 100%;
+  margin-left: 0;
   color: rgba(255, 255, 255, .54);
   background: transparent;
   padding: 5px 1px;
@@ -547,18 +541,20 @@ body.case-open .orbit-assistant {
 
 .orbit-message-meta {
   color: rgba(200, 167, 110, .68);
-  font-size: 8px;
+  font-size: 12px;
   line-height: 1;
   text-transform: uppercase;
 }
 
 .orbit-message-copy {
   white-space: pre-line;
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .orbit-welcome-note {
   color: rgba(255, 255, 255, .38);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
 }
 
@@ -566,10 +562,10 @@ body.case-open .orbit-assistant {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 7px;
-  width: calc(100% - 44px);
-  margin-left: 44px;
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, .065);
+  width: 100%;
+  margin-left: 0;
+  padding: 16px;
+  border: 0;
   border-radius: 14px;
   background: rgba(255, 255, 255, .025);
   animation: orbit-message-in .28s .06s ease-out both;
@@ -579,7 +575,7 @@ body.case-open .orbit-assistant {
   grid-column: 1 / -1;
   margin-bottom: 2px;
   color: rgba(255, 255, 255, .38);
-  font-size: 8px;
+  font-size: 12px;
   line-height: 1;
   letter-spacing: .04em;
   text-transform: uppercase;
@@ -588,11 +584,11 @@ body.case-open .orbit-assistant {
 .orbit-quick-questions button {
   min-height: 36px;
   padding: 8px 9px;
-  border: 1px solid rgba(255, 255, 255, .09);
+  border: 1px solid rgba(255, 255, 255, .075);
   border-radius: 10px;
   color: rgba(255, 255, 255, .68);
   background: rgba(255, 255, 255, .025);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.25;
   text-align: center;
   transition: color .2s ease, border-color .2s ease, background .2s ease, transform .2s ease;
@@ -615,8 +611,7 @@ body.case-open .orbit-assistant {
   z-index: 2;
   display: block;
   padding: 12px;
-  border-top: 1px solid rgba(255, 255, 255, .08);
-  background: rgba(7, 8, 10, .34);
+  background: rgba(7, 8, 10, .2);
 }
 
 .orbit-input-wrap {
@@ -637,33 +632,34 @@ body.case-open .orbit-assistant {
 
 .orbit-input {
   width: 100%;
-  min-height: 46px;
+  min-height: 50px;
   max-height: 92px;
   resize: none;
   border: 0;
   outline: 0;
-  padding: 13px 50px 11px 13px;
+  padding: 15px 54px 13px 14px;
   color: rgba(255, 255, 255, .88);
   background: transparent;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.45;
 }
 
 .orbit-input::placeholder {
   color: rgba(255, 255, 255, .32);
+  font-size: 14px;
 }
 
 .orbit-send {
   position: absolute;
-  right: 19px;
-  bottom: 19px;
+  right: 22px;
+  bottom: 22px;
   width: 30px;
   height: 30px;
   display: grid;
   place-items: center;
   padding: 0;
   border: 1px solid rgba(200, 167, 110, .18);
-  border-radius: 50%;
+  border-radius: 12px;
   color: rgba(248, 241, 226, .9);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, .1), transparent 54%),
