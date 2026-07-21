@@ -119,8 +119,8 @@ body.case-open .orbit-assistant {
   height: 5px;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: var(--orbit-gold);
-  box-shadow: 0 0 9px rgba(200, 167, 110, .54);
+  background: #22c55e;
+  box-shadow: 0 0 9px rgba(34, 197, 94, .55);
   animation: orbit-breathe 2.8s ease-in-out infinite;
 }
 
@@ -152,23 +152,6 @@ body.case-open .orbit-assistant {
   clip-path: inset(0 0 4% 0);
   outline: 0;
   pointer-events: none;
-}
-
-.orbit-robot-fallback {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-  opacity: 1;
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
-
-.orbit-webgl.is-ready + .orbit-robot-fallback {
-  opacity: 0;
-  visibility: hidden;
 }
 
 .orbit-webgl--failed {
@@ -408,8 +391,10 @@ body.case-open .orbit-assistant {
   background: rgba(7, 8, 10, .12);
 }
 
-.orbit-panel-avatar,
-.orbit-message-avatar {
+.orbit-panel-avatar {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -420,14 +405,7 @@ body.case-open .orbit-assistant {
     rgba(255, 255, 255, .025);
 }
 
-.orbit-panel-avatar {
-  width: 36px;
-  height: 36px;
-  flex: 0 0 auto;
-}
-
-.orbit-panel-avatar img,
-.orbit-message-avatar img {
+.orbit-panel-avatar img {
   display: block;
   width: 78%;
   height: 84%;
@@ -529,14 +507,6 @@ body.case-open .orbit-assistant {
   color: rgba(255, 255, 255, .54);
   background: transparent;
   padding: 5px 1px;
-}
-
-.orbit-message-avatar {
-  position: absolute;
-  top: 0;
-  left: -44px;
-  width: 32px;
-  height: 32px;
 }
 
 .orbit-message-meta {
