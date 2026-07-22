@@ -7,6 +7,7 @@
   <meta name="description" content="面向 AI 产品、B 端 SaaS 与复杂业务场景的资深 UI/UX 设计师个人官网。" />
   <link rel="icon" href="assets/brand/logo-favicon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)" />
   <link rel="icon" href="assets/brand/logo-favicon-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)" />
+  <link rel="preload" as="image" href="assets/hero/banner-video-first-frame.jpg" fetchpriority="high" />
   <style>
     :root {
       color-scheme: dark;
@@ -495,7 +496,7 @@
       min-height: 100svh;
       display: block;
       overflow: hidden;
-      background: var(--bg);
+      background: var(--bg) url("assets/hero/banner-video-first-frame.jpg") 58% center / cover no-repeat;
       font-family: var(--font-body);
     }
 
@@ -535,7 +536,13 @@
       height: 100%;
       object-fit: cover;
       object-position: 58% center;
+      opacity: 0;
+      transition: opacity .8s cubic-bezier(.22, 1, .36, 1);
       z-index: 0;
+    }
+
+    .hero-video.is-ready {
+      opacity: 1;
     }
 
     .hero-video-blackout {
@@ -3858,7 +3865,8 @@
       const sourceUrl = heroVideo.dataset.src;
       const network = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
       const slowNetwork = network?.saveData || /(^|-)2g|3g/.test(network?.effectiveType || "");
-      if (!sourceUrl || slowNetwork || reduceMotion.matches) return;
+      const compactViewport = window.matchMedia("(max-width: 767px)").matches;
+      if (!sourceUrl || compactViewport || slowNetwork || reduceMotion.matches) return;
 
       const source = document.createElement("source");
       source.src = sourceUrl;
@@ -3868,6 +3876,10 @@
       heroVideo.load();
       heroVideo.play().catch(() => {});
     }
+
+    heroVideo.addEventListener("canplay", () => {
+      heroVideo.classList.add("is-ready");
+    }, { once: true });
 
     window.addEventListener("load", () => {
       const deferVideo = window.requestIdleCallback
