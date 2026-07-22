@@ -866,7 +866,7 @@
 
     .marquee {
       background: transparent;
-      padding: var(--section-space) 0 var(--space-8);
+      padding: var(--section-space) 0 0;
       overflow: hidden;
     }
 
@@ -902,7 +902,7 @@
     .about {
       height: auto;
       max-height: none;
-      padding: var(--section-space) var(--gutter);
+      padding: var(--section-space) var(--gutter) 0;
       overflow: hidden;
       background: transparent;
       position: relative;
@@ -1624,7 +1624,7 @@
 
     .projects-header {
       width: min(1260px, 100%);
-      margin: 0 auto clamp(52px, 7vw, 88px);
+      margin: 0 auto 56px;
       display: block;
     }
 
@@ -1644,6 +1644,10 @@
       height: calc(100vh + 160px);
       min-height: 760px;
       margin-bottom: -72px;
+    }
+
+    .projects > .project-wrap:last-child {
+      margin-bottom: 0;
     }
 
     .project-card {
@@ -2327,7 +2331,11 @@
 
 
     .footer-cta {
-      padding: var(--section-space) var(--gutter) var(--space-8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--section-space) var(--gutter);
       text-align: center;
       background: transparent;
     }
@@ -3196,8 +3204,12 @@
 
     /* Mobile layout: make the about cards deliberate, readable, and compact. */
     @media (max-width: 700px) {
+      .marquee {
+        padding: 64px 0 0;
+      }
+
       .about {
-        padding: 64px 16px 72px;
+        padding: 64px 16px 0;
       }
 
       .about-header {
@@ -3294,7 +3306,11 @@
       }
 
       .projects {
-        padding-top: 64px;
+        padding: 64px 16px;
+      }
+
+      .other-projects {
+        padding: 0 16px 64px;
       }
 
       .projects-header {
@@ -3442,7 +3458,7 @@
     </nav>
 
     <div class="hero-center">
-      <p class="hero-kicker animate-fade-rise">UI/UX Designer</p>
+      <p class="hero-kicker animate-fade-rise">UI UX Designer</p>
       <p class="hero-subtitle animate-fade-rise-delay" aria-label="B端 SaaS，AI 产品，Design System">B端 SaaS<span class="hero-divider" aria-hidden="true">｜</span>AI 产品<span class="hero-divider" aria-hidden="true">｜</span>Design System</p>
       <p class="hero-subtext animate-fade-rise-delay">我们习惯仰望星空，却忘了脚下的选择，也能改变未来的轨迹。</p>
       <div class="hero-action-row animate-fade-rise-delay-2">
@@ -3459,7 +3475,6 @@
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/ai-agent-analysis.jpg" alt="AI Agent 舆情分析流程项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/web3-ecommerce-laptop.jpg" alt="Web3 电商平台项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/universal-mini-program.jpg" alt="环球影城小程序项目封面" /></div>
-        <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/smart-car-hmi-system.jpg" alt="斑马智行 HMI 智能座舱项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/public-opinion-platform.jpg" alt="舆情监测平台体验优化项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/haicao-cloud-platform.jpg" alt="海草云平台升级项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/global-public-opinion-system.jpg" alt="全球舆情监测态势感知系统项目封面" /></div>
@@ -3468,7 +3483,6 @@
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/global-public-opinion-system.jpg" alt="全球舆情监测态势感知系统项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/haicao-cloud-platform.jpg" alt="海草云平台升级项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/public-opinion-platform.jpg" alt="舆情监测平台体验优化项目封面" /></div>
-        <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/smart-car-hmi-system.jpg" alt="斑马智行 HMI 智能座舱项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/universal-mini-program.jpg" alt="环球影城小程序项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/web3-ecommerce-laptop.jpg" alt="Web3 电商平台项目封面" /></div>
         <div class="tile"><img loading="lazy" decoding="async" src="assets/project-covers/optimized/ai-agent-analysis.jpg" alt="AI Agent 舆情分析流程项目封面" /></div>
@@ -3696,7 +3710,6 @@
           <button type="button" data-filter="web">Web 官网</button>
           <button type="button" data-filter="mobile">Mobile App</button>
           <button type="button" data-filter="data">数据可视化</button>
-          <button type="button" data-filter="hmi">HMI</button>
         </div>
 
         <div class="other-grid">
@@ -3736,11 +3749,6 @@
             </div>
           </button>
 
-          <button class="other-card case-trigger fade-in" type="button" data-category="hmi" data-case="hmi-system" style="--other-accent:rgba(255,194,82,.13); --delay:220ms">
-            <div class="other-card-media">
-              <img loading="lazy" decoding="async" src="assets/project-covers/optimized/smart-car-hmi-system.jpg" alt="斑马智行 HMI 智能座舱项目封面" />
-            </div>
-          </button>
         </div>
       </div>
     </section>
@@ -3768,11 +3776,6 @@
       </div>
     </section>
   </main>
-
-  <footer>
-    <span>Pengfei UX Portfolio</span>
-    <span>AI Product / SaaS / Design System / Data Visualization</span>
-  </footer>
 
   <div class="orbit-assistant" id="orbitAssistant">
     <button class="orbit-backdrop" id="orbitBackdrop" type="button" aria-label="关闭 ORBIT-01"></button>
@@ -4180,32 +4183,6 @@
           { src: "assets/case-studies/wedding-app/05.jpg", alt: "备婚方案 App 项目详情图 06" },
           { src: "assets/case-studies/wedding-app/06.jpg", alt: "备婚方案 App 项目详情图 07" },
           { src: "assets/case-studies/wedding-app/07.jpg", alt: "备婚方案 App 项目详情图 08" }
-        ]
-      },
-      "hmi-system": {
-        index: "09",
-        category: "HMI / Complex Experience",
-        title: "斑马智行 HMI 智能座舱",
-        summary: "面向车机场景，探索高频驾驶任务、信息密度和多模态交互之间的体验平衡。",
-        tags: ["HMI", "复杂业务", "交互设计"],
-        cover: "assets/project-covers/optimized/smart-car-hmi-system.jpg",
-        coverAlt: "斑马智行 HMI 智能座舱项目封面",
-        accent: "rgba(255,194,82,.13)",
-        gallery: [
-          { src: "assets/project-covers/optimized/smart-car-hmi-system.jpg", alt: "斑马智行 HMI 智能座舱项目详情封面" },
-          { src: "assets/case-studies/hmi-system/20.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 20" },
-          { src: "assets/case-studies/hmi-system/21.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 21" },
-          { src: "assets/case-studies/hmi-system/22.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 22" },
-          { src: "assets/case-studies/hmi-system/23.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 23" },
-          { src: "assets/case-studies/hmi-system/24.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 24" },
-          { src: "assets/case-studies/hmi-system/25.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 25" },
-          { src: "assets/case-studies/hmi-system/26.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 26" },
-          { src: "assets/case-studies/hmi-system/27.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 27" },
-          { src: "assets/case-studies/hmi-system/28.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 28" },
-          { src: "assets/case-studies/hmi-system/29.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 29" },
-          { src: "assets/case-studies/hmi-system/30.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 30" },
-          { src: "assets/case-studies/hmi-system/31.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 31" },
-          { src: "assets/case-studies/hmi-system/32.jpg", alt: "斑马智行 HMI 智能座舱项目详情图 32" }
         ]
       }
 
