@@ -3862,8 +3862,9 @@
     let videoLoopResetting = false;
     const videoFadeLeadTime = 1.5;
 
-    // Keep the first paint lightweight: the still poster is shown immediately,
-    // then the 10 MB cinematic video is fetched only when the page is idle.
+    // Keep the first paint lightweight: the sharp still poster is shown immediately.
+    // The 10 MB cinematic video waits until the rest of the page has had time to load,
+    // so it does not compete with visible images on slower cross-border connections.
     function startHeroVideoWhenReady() {
       const sourceUrl = heroVideo.dataset.src;
       const network = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -3886,9 +3887,9 @@
 
     window.addEventListener("load", () => {
       const deferVideo = window.requestIdleCallback
-        ? (callback) => window.requestIdleCallback(callback, { timeout: 2600 })
-        : (callback) => window.setTimeout(callback, 1200);
-      deferVideo(startHeroVideoWhenReady);
+        ? (callback) => window.requestIdleCallback(callback, { timeout: 5500 })
+        : (callback) => window.setTimeout(callback, 4200);
+      window.setTimeout(() => deferVideo(startHeroVideoWhenReady), 1800);
     }, { once: true });
 
     heroVideo.addEventListener("timeupdate", () => {
