@@ -2107,6 +2107,46 @@
       display: none;
     }
 
+    .case-media-frame {
+      position: relative;
+      display: grid;
+      min-height: clamp(240px, 38vw, 560px);
+      margin: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(100deg, transparent 30%, rgba(255,255,255,.055) 48%, transparent 66%),
+        rgba(255,255,255,.035);
+      background-size: 220% 100%, auto;
+      animation: case-image-loading 1.6s linear infinite;
+    }
+
+    .case-media-frame.is-loaded {
+      min-height: 0;
+      animation: none;
+      background: transparent;
+    }
+
+    .case-media-frame.is-error {
+      animation: none;
+      background: rgba(255,255,255,.035);
+    }
+
+    .case-media-frame.is-error::after {
+      content: "图片暂未加载成功，请检查网络后重试";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--ink-dim);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @keyframes case-image-loading {
+      to { background-position: -120% 0, 0 0; }
+    }
+
     .case-gallery img {
       display: block;
       width: 100%;
@@ -3613,7 +3653,39 @@
       </div>
 
       <div class="project-wrap">
-        <article class="project-card" style="--stack:0px; --accent:rgba(135,166,255,.22); --accent-fade:rgba(135,166,255,.055); --accent-border:rgba(135,166,255,.28)" data-card-index="0">
+        <article class="project-card" style="--stack:0px; --accent:rgba(0,138,214,.22); --accent-fade:rgba(0,138,214,.055); --accent-border:rgba(0,138,214,.26)" data-card-index="0">
+          <div class="project-copy">
+            <div>
+              <h3 class="project-name">B端 SaaS<br />舆情监测平台</h3>
+              <p class="project-desc">从信息检索工具升级为分析决策工具，重构搜索、监测、研判与报告链路，让分析师更快建立宏观认知并形成洞察。</p>
+              <div class="project-meta">
+                <span>舆情监测</span>
+                <span>B 端 SaaS</span>
+                <span>数据分析</span>
+              </div>
+            </div>
+            <button class="live-button case-trigger" type="button" data-case="analytics">View Details</button>
+          </div>
+          <div class="project-visual">
+            <button class="project-image case-trigger" type="button" data-case="analytics" aria-label="查看舆情监测平台项目详情">
+              <img loading="lazy" decoding="async" src="assets/case-studies/public-opinion/03.jpg" alt="舆情监测平台体验优化项目封面" />
+            </button>
+            <div class="project-stats">
+              <div class="project-stat">
+                <span>信息检索效率</span>
+                <strong>+28%</strong>
+              </div>
+              <div class="project-stat">
+                <span>研判决策路径</span>
+                <strong>-35%</strong>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="project-wrap">
+        <article class="project-card" style="--stack:40px; --accent:rgba(135,166,255,.22); --accent-fade:rgba(135,166,255,.055); --accent-border:rgba(135,166,255,.28)" data-card-index="1">
           <div class="project-copy">
             <div>
               <h3 class="project-name">AI agent<br />体验流程优化</h3>
@@ -3637,38 +3709,6 @@
               <div class="project-stat">
                 <span>人工处理路径</span>
                 <strong>-40%</strong>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <div class="project-wrap">
-        <article class="project-card" style="--stack:40px; --accent:rgba(0,138,214,.22); --accent-fade:rgba(0,138,214,.055); --accent-border:rgba(0,138,214,.26)" data-card-index="1">
-          <div class="project-copy">
-            <div>
-              <h3 class="project-name">B端 SaaS<br />舆情监测平台</h3>
-              <p class="project-desc">从信息检索工具升级为分析决策工具，重构搜索、监测、研判与报告链路，让分析师更快建立宏观认知并形成洞察。</p>
-              <div class="project-meta">
-                <span>舆情监测</span>
-                <span>B 端 SaaS</span>
-                <span>数据分析</span>
-              </div>
-            </div>
-            <button class="live-button case-trigger" type="button" data-case="analytics">View Details</button>
-          </div>
-          <div class="project-visual">
-            <button class="project-image case-trigger" type="button" data-case="analytics" aria-label="查看舆情监测平台项目详情">
-              <img loading="lazy" decoding="async" src="assets/case-studies/public-opinion/03.webp" alt="舆情监测平台体验优化项目封面" />
-            </button>
-            <div class="project-stats">
-              <div class="project-stat">
-                <span>信息检索效率</span>
-                <strong>+28%</strong>
-              </div>
-              <div class="project-stat">
-                <span>研判决策路径</span>
-                <strong>-35%</strong>
               </div>
             </div>
           </div>
@@ -4006,7 +4046,7 @@
         title: "B端 SaaS / 舆情监测平台",
         summary: "从信息检索工具升级为分析决策工具，重构搜索、监测、研判与报告链路，让分析师更快建立宏观认知并形成洞察。",
         tags: ["舆情监测", "B 端 SaaS", "数据分析"],
-        cover: "assets/case-studies/public-opinion/03.webp",
+        cover: "assets/case-studies/public-opinion/03.jpg",
         coverAlt: "舆情监测平台体验优化项目封面",
         accent: "rgba(0,138,214,.15)",
         background: "项目服务于舆情分析师与企业决策团队，通过多来源信息监测、搜索与研判，持续识别风险事件并形成分析结论。",
@@ -4018,29 +4058,28 @@
           { label: "研判决策路径", value: "-35%" }
         ],
         gallery: [
-          { src: "assets/case-studies/public-opinion/03.webp", alt: "舆情监测平台体验优化详情图 01" },
-          { src: "assets/case-studies/public-opinion/04.webp", alt: "舆情监测平台体验优化详情图 02" },
-          { src: "assets/case-studies/public-opinion/05.webp", alt: "舆情监测平台体验优化详情图 03" },
-          { src: "assets/case-studies/public-opinion/06.webp", alt: "舆情监测平台体验优化详情图 04" },
-          { src: "assets/case-studies/public-opinion/07.webp", alt: "舆情监测平台体验优化详情图 05" },
-          { src: "assets/case-studies/public-opinion/08.webp", alt: "舆情监测平台体验优化详情图 06" },
-          { src: "assets/case-studies/public-opinion/09.webp", alt: "舆情监测平台体验优化详情图 07" },
-          { src: "assets/case-studies/public-opinion/10.webp", alt: "舆情监测平台体验优化详情图 08" },
-          { src: "assets/case-studies/public-opinion/11.webp", alt: "舆情监测平台体验优化详情图 09" },
-          { src: "assets/case-studies/public-opinion/12.webp", alt: "舆情监测平台体验优化详情图 10" },
-          { src: "assets/case-studies/public-opinion/13.webp", alt: "舆情监测平台体验优化详情图 11" },
-          { src: "assets/case-studies/public-opinion/14.webp", alt: "舆情监测平台体验优化详情图 12" },
-          { src: "assets/case-studies/public-opinion/15.webp", alt: "舆情监测平台体验优化详情图 13" },
-          { src: "assets/case-studies/public-opinion/27.webp", alt: "舆情监测平台体验优化详情图 14" },
-          { src: "assets/case-studies/public-opinion/28.webp", alt: "舆情监测平台体验优化详情图 15" },
-          { src: "assets/case-studies/public-opinion/29.webp", alt: "舆情监测平台体验优化详情图 16" },
-          { src: "assets/case-studies/public-opinion/30.webp", alt: "舆情监测平台体验优化详情图 17" },
-          { src: "assets/case-studies/public-opinion/31.webp", alt: "舆情监测平台体验优化详情图 18" },
-          { src: "assets/case-studies/public-opinion/32.webp", alt: "舆情监测平台体验优化详情图 19" },
-          { src: "assets/case-studies/public-opinion/33.webp", alt: "舆情监测平台体验优化详情图 20" },
-          { src: "assets/case-studies/public-opinion/34.webp", alt: "舆情监测平台体验优化详情图 21" },
-          { src: "assets/case-studies/public-opinion/35.webp", alt: "舆情监测平台体验优化详情图 22" },
-          { src: "assets/case-studies/public-opinion/36.webp", alt: "舆情监测平台体验优化详情图 23" }
+          { src: "assets/case-studies/public-opinion/03.jpg", alt: "舆情监测平台体验优化详情图 01" },
+          { src: "assets/case-studies/public-opinion/04.jpg", alt: "舆情监测平台体验优化详情图 02" },
+          { src: "assets/case-studies/public-opinion/05.jpg", alt: "舆情监测平台体验优化详情图 03" },
+          { src: "assets/case-studies/public-opinion/06.jpg", alt: "舆情监测平台体验优化详情图 04" },
+          { src: "assets/case-studies/public-opinion/07.jpg", alt: "舆情监测平台体验优化详情图 05" },
+          { src: "assets/case-studies/public-opinion/08.jpg", alt: "舆情监测平台体验优化详情图 06" },
+          { src: "assets/case-studies/public-opinion/09.jpg", alt: "舆情监测平台体验优化详情图 07" },
+          { src: "assets/case-studies/public-opinion/10.jpg", alt: "舆情监测平台体验优化详情图 08" },
+          { src: "assets/case-studies/public-opinion/11.jpg", alt: "舆情监测平台体验优化详情图 09" },
+          { src: "assets/case-studies/public-opinion/12.jpg", alt: "舆情监测平台体验优化详情图 10" },
+          { src: "assets/case-studies/public-opinion/13.jpg", alt: "舆情监测平台体验优化详情图 11" },
+          { src: "assets/case-studies/public-opinion/14.jpg", alt: "舆情监测平台体验优化详情图 12" },
+          { src: "assets/case-studies/public-opinion/15.jpg", alt: "舆情监测平台体验优化详情图 13" },
+          { src: "assets/case-studies/public-opinion/27.jpg", alt: "舆情监测平台体验优化详情图 14" },
+          { src: "assets/case-studies/public-opinion/28.jpg", alt: "舆情监测平台体验优化详情图 15" },
+          { src: "assets/case-studies/public-opinion/29.jpg", alt: "舆情监测平台体验优化详情图 16" },
+          { src: "assets/case-studies/public-opinion/30.jpg", alt: "舆情监测平台体验优化详情图 17" },
+          { src: "assets/case-studies/public-opinion/31.jpg", alt: "舆情监测平台体验优化详情图 18" },
+          { src: "assets/case-studies/public-opinion/32.jpg", alt: "舆情监测平台体验优化详情图 19" },
+          { src: "assets/case-studies/public-opinion/33.jpg", alt: "舆情监测平台体验优化详情图 20" },
+          { src: "assets/case-studies/public-opinion/34.jpg", alt: "舆情监测平台体验优化详情图 21" },
+          { src: "assets/case-studies/public-opinion/35.jpg", alt: "舆情监测平台体验优化详情图 22" }
         ]
       },
       system: {
@@ -4109,12 +4148,11 @@
         accent: "rgba(128,92,255,.14)",
         gallery: [
           { src: "assets/project-covers/optimized/global-public-opinion-system.jpg", alt: "沃观官网品牌与体验升级项目详情封面" },
-          { src: "assets/case-studies/woguan-website/38.jpg", alt: "沃观官网品牌与体验升级项目详情图 01" },
-          { src: "assets/case-studies/woguan-website/39.jpg", alt: "沃观官网品牌与体验升级项目详情图 02" },
-          { src: "assets/case-studies/woguan-website/40.jpg", alt: "沃观官网品牌与体验升级项目详情图 03" },
+          { src: "assets/case-studies/woguan-website/37.jpg", alt: "沃观官网品牌与体验升级项目详情图 01" },
+          { src: "assets/case-studies/woguan-website/38.jpg", alt: "沃观官网品牌与体验升级项目详情图 02" },
+          { src: "assets/case-studies/woguan-website/39.jpg", alt: "沃观官网品牌与体验升级项目详情图 03" },
           { src: "assets/case-studies/woguan-website/41.jpg", alt: "沃观官网品牌与体验升级项目详情图 04" },
-          { src: "assets/case-studies/woguan-website/42.jpg", alt: "沃观官网品牌与体验升级项目详情图 05" },
-          { src: "assets/case-studies/woguan-website/43.jpg", alt: "沃观官网品牌与体验升级项目详情图 06" }
+          { src: "assets/case-studies/woguan-website/42.jpg", alt: "沃观官网品牌与体验升级项目详情图 05" }
         ]
       },
       "haicao-cloud": {
@@ -4340,23 +4378,34 @@
       const gallery = document.getElementById("caseGallery");
       const media = data.gallery.length ? data.gallery : [{ src: data.cover, alt: data.coverAlt }];
       const galleryImages = media.map((image, index) => {
+        const frame = document.createElement("figure");
+        frame.className = "case-media-frame";
         const item = document.createElement("img");
-        item.src = image.src;
         item.alt = image.alt;
         item.loading = index === 0 ? "eager" : "lazy";
         item.decoding = "async";
-        item.addEventListener("load", updateCaseScrollbar, { once: true });
-        if (index === 0) {
-          const finishLoading = () => caseLoading.classList.add("is-hidden");
-          item.addEventListener("load", finishLoading, { once: true });
-          item.addEventListener("error", finishLoading, { once: true });
-        }
-        return item;
+        let settled = false;
+        const finishImage = (loaded) => {
+          if (settled) return;
+          settled = true;
+          if (loaded) {
+            frame.classList.add("is-loaded");
+          } else {
+            frame.classList.add("is-error");
+          }
+          if (index === 0) caseLoading.classList.add("is-hidden");
+          updateCaseScrollbar();
+        };
+        item.addEventListener("load", () => finishImage(true), { once: true });
+        item.addEventListener("error", () => finishImage(false), { once: true });
+        item.src = image.src;
+        frame.append(item);
+        if (item.complete) window.requestAnimationFrame(() => finishImage(item.naturalWidth > 0));
+        return frame;
       });
       gallery.replaceChildren(...galleryImages, createCaseProjectNav(caseId));
       gallery.hidden = media.length === 0;
       if (!galleryImages.length) caseLoading.classList.add("is-hidden");
-      if (galleryImages[0]?.complete) window.requestAnimationFrame(() => caseLoading.classList.add("is-hidden"));
 
       caseSheet.style.setProperty("--case-accent", data.accent);
       caseScrollViewport.scrollTop = 0;
