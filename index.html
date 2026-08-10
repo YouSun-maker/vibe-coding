@@ -1919,7 +1919,7 @@
     .case-sheet {
       position: relative;
       z-index: 1;
-      width: min(1440px, 100%);
+      width: min(1600px, 100%);
       height: calc(100dvh - 80px);
       max-height: none;
       margin: 0 auto;
@@ -1965,8 +1965,8 @@
     .case-close {
       position: absolute;
       z-index: 110;
-      top: 52px;
-      right: max(52px, calc((100vw - min(1440px, calc(100vw - 80px))) / 2 + 12px));
+      top: 64px;
+      right: max(64px, calc((100vw - min(1600px, calc(100vw - 80px))) / 2 + 24px));
       width: 48px;
       height: 48px;
       display: grid;
@@ -2184,24 +2184,43 @@
     .case-loading-indicator {
       display: grid;
       justify-items: center;
-      gap: 14px;
+      gap: 4px;
       font-size: 12px;
-      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
-    .case-loading-indicator::before {
-      content: "";
-      width: 34px;
-      height: 34px;
-      border: 2px solid rgba(255,255,255,.12);
-      border-top-color: rgba(255,255,255,.78);
-      border-radius: 50%;
-      animation: case-loading-spin .8s linear infinite;
+    .gravity-loader {
+      display: block;
+      width: clamp(136px, 15vw, 176px);
+      height: auto;
+      overflow: visible;
     }
 
-    @keyframes case-loading-spin {
-      to { transform: rotate(360deg); }
+    .station-loader__guide {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: .55;
+      stroke-dasharray: 1.2 3;
+      opacity: 0;
+    }
+
+    .station-loader__connector {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.15;
+      stroke-linecap: round;
+      opacity: 0;
+    }
+
+    .station-loader__bead {
+      fill: url(#case-loader-bead);
+      filter: url(#case-loader-bead-shadow);
+    }
+
+    .case-loading-copy {
+      color: rgba(255,255,255,.62);
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     .case-project-nav {
@@ -2530,8 +2549,8 @@
     .case-close:hover {
       position: absolute;
       z-index: 120;
-      top: 52px;
-      right: max(16px, calc((100vw - min(1440px, calc(100vw - 80px))) / 2 - 72px));
+      top: 64px;
+      right: max(64px, calc((100vw - min(1600px, calc(100vw - 80px))) / 2 + 24px));
       display: grid;
       color: rgba(255,255,255,.94);
       border-color: rgba(255,255,255,.2);
@@ -3227,15 +3246,15 @@
       }
     }
 
-    @media (min-width: 701px) and (max-width: 1520px) {
+    @media (min-width: 701px) {
       .case-overlay {
         padding: 40px 96px 40px 40px;
       }
 
       .case-close,
       .case-close:hover {
-        top: 52px;
-        right: 24px;
+        top: 40px;
+        right: max(36px, calc((100vw - 1664px) / 2));
       }
     }
 
@@ -3865,7 +3884,32 @@
     <button class="case-backdrop" type="button" data-case-close tabindex="-1" aria-label="关闭项目详情"></button>
     <button class="case-close" type="button" data-case-close aria-label="关闭项目详情"><span aria-hidden="true"></span></button>
     <section class="case-sheet" role="dialog" aria-modal="true" aria-label="项目图片详情" tabindex="-1">
-      <div class="case-loading is-hidden" id="caseLoading" aria-live="polite"><span class="case-loading-indicator">Loading project</span></div>
+      <div class="case-loading is-hidden" id="caseLoading" aria-live="polite">
+        <span class="case-loading-indicator">
+          <svg class="gravity-loader" data-station-loader viewBox="0 0 160 160" aria-hidden="true">
+            <defs>
+              <radialGradient id="case-loader-bead" cx="30%" cy="26%" r="72%">
+                <stop offset="0" stop-color="#fff" />
+                <stop offset=".22" stop-color="#f7f7f7" />
+                <stop offset=".58" stop-color="#a8a8a8" />
+                <stop offset="1" stop-color="#333" />
+              </radialGradient>
+              <filter id="case-loader-bead-shadow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur" />
+                <feFlood flood-color="#fff" flood-opacity=".24" result="color" />
+                <feComposite in="color" in2="blur" operator="in" result="glow" />
+                <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g data-guide-layer></g>
+            <g data-station-group>
+              <g class="station-loader__connectors" data-connector-layer></g>
+              <g data-bead-layer></g>
+            </g>
+          </svg>
+          <span class="case-loading-copy">正在载入作品</span>
+        </span>
+      </div>
       <div class="case-scroll-viewport">
         <div class="case-gallery" id="caseGallery" hidden></div>
       </div>
@@ -3877,6 +3921,7 @@
     <source src="assets/audio/cornfield-chase.mp3" type="audio/mpeg" />
   </audio>
 
+  <script src="assets/loading/interstellar-loader.js"></script>
   <script>
     const menuButton = document.getElementById("menuButton");
     const siteNav = document.getElementById("siteNav");
@@ -4079,7 +4124,13 @@
           { src: "assets/case-studies/public-opinion/32.jpg", alt: "舆情监测平台体验优化详情图 19" },
           { src: "assets/case-studies/public-opinion/33.jpg", alt: "舆情监测平台体验优化详情图 20" },
           { src: "assets/case-studies/public-opinion/34.jpg", alt: "舆情监测平台体验优化详情图 21" },
-          { src: "assets/case-studies/public-opinion/35.jpg", alt: "舆情监测平台体验优化详情图 22" }
+          { src: "assets/case-studies/public-opinion/35.jpg", alt: "舆情监测平台体验优化详情图 22" },
+          { src: "assets/case-studies/public-opinion/37.jpg", alt: "舆情监测平台体验优化详情图 23" },
+          { src: "assets/case-studies/public-opinion/38.jpg", alt: "舆情监测平台体验优化详情图 24" },
+          { src: "assets/case-studies/public-opinion/39.jpg", alt: "舆情监测平台体验优化详情图 25" },
+          { src: "assets/case-studies/public-opinion/40.jpg", alt: "舆情监测平台体验优化详情图 26" },
+          { src: "assets/case-studies/public-opinion/41.jpg", alt: "舆情监测平台体验优化详情图 27" },
+          { src: "assets/case-studies/public-opinion/42.jpg", alt: "舆情监测平台体验优化详情图 28" }
         ]
       },
       system: {
@@ -4100,7 +4151,7 @@
           { label: "交付周期缩短", value: "-30%" }
         ],
         gallery: [
-          { src: "assets/project-covers/optimized/haicao-cloud-platform.jpg", alt: "企业级设计系统项目详情图 01" },
+          { src: "assets/case-studies/haicaoyu-system/01.jpg", alt: "企业级设计系统项目详情图 01" },
           { src: "assets/case-studies/haicaoyu-system/02.jpg", alt: "企业级设计系统项目详情图 02" },
           { src: "assets/case-studies/haicaoyu-system/03.jpg", alt: "企业级设计系统项目详情图 03" },
           { src: "assets/case-studies/haicaoyu-system/04.jpg", alt: "企业级设计系统项目详情图 04" },
